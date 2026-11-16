@@ -4,13 +4,13 @@ namespace ProvaDagua.Api.Workers;
 
 public sealed class FloodEventEvaluationWorker(
     IServiceScopeFactory scopeFactory,
+    IConfiguration configuration,
     ILogger<FloodEventEvaluationWorker> logger) : BackgroundService
 {
-    private static readonly TimeSpan Interval = TimeSpan.FromSeconds(30);
-
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        using var timer = new PeriodicTimer(Interval);
+        var interval = TimeSpan.FromSeconds(configuration.GetValue("Worker:IntervalSeconds", 30));
+        using var timer = new PeriodicTimer(interval);
 
         do
         {

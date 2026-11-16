@@ -1,4 +1,5 @@
 using ProvaDagua.Application.Abstractions;
+using ProvaDagua.Domain.Alerts;
 using ProvaDagua.Domain.Common;
 using ProvaDagua.Domain.FloodEvents;
 
@@ -8,6 +9,7 @@ public sealed class EvaluateSuspectedEventsHandler(
     IFloodEventRepository floodEvents,
     IReadingRepository readings,
     IFloodClassifier classifier,
+    IAlertRepository alerts,
     IUnitOfWork unitOfWork,
     TimeProvider clock)
 {
@@ -31,13 +33,26 @@ public sealed class EvaluateSuspectedEventsHandler(
                 _ => null
             };
 
-            if (result is { IsSuccess: true })
-                decided++;
+            if (result is not { IsSuccess: true })
+                continue;
+
+            if (floodEvent.Status == FloodEventStatus.Confirmed)
+                await NotifySubscribersAsync(floodEvent, now, ct);
+
+            decided++;
         }
 
         if (decided > 0)
             await unitOfWork.SaveChangesAsync(ct);
 
         return decided;
+    }
+
+    private async Task NotifySubscribersAsync(FloodEvent floodEvent, DateTimeOffset now, CancellationToken ct)
+    {
+        var subscribers = await alerts.GetSubscribersBySensorAsync(floodEvent.SensorId, ct);
+
+        foreach (var subscriber in subscribers)
+            alerts.Add(AlertNotification.FloodConfirmed(subscriber.Subscription, subscriber.Street, floodEvent.Id, now));
     }
 }

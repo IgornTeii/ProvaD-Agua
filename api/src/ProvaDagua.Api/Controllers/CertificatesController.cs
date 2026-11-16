@@ -7,13 +7,20 @@ namespace ProvaDagua.Api.Controllers;
 [Route("certificates")]
 public sealed class CertificatesController(IReadQueries queries) : ControllerBase
 {
-    /// <summary>Comprovações emitidas para um endereço.</summary>
     [HttpGet]
     [ProducesResponseType<IReadOnlyList<CertificateDto>>(StatusCodes.Status200OK)]
-    public async Task<IActionResult> ListByAddress([FromQuery] Guid addressId, CancellationToken ct) =>
-        Ok(await queries.GetCertificatesByAddressAsync(addressId, ct));
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> List(
+        [FromQuery] Guid? addressId, [FromQuery] Guid? floodEventId, CancellationToken ct)
+    {
+        if (addressId is null && floodEventId is null)
+            return Problem(statusCode: StatusCodes.Status400BadRequest,
+                           title: "certificate.filter_required",
+                           detail: "Informe o endereço ou o alagamento.");
 
-    /// <summary>Verifica a autenticidade de uma comprovação pelo código (ex.: PDA-7K3M-9XQ2).</summary>
+        return Ok(await queries.GetCertificatesAsync(addressId, floodEventId, ct));
+    }
+
     [HttpGet("{code}/verify")]
     [ProducesResponseType<CertificateDto>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

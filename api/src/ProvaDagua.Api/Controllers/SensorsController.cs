@@ -7,7 +7,11 @@ namespace ProvaDagua.Api.Controllers;
 [Route("sensors")]
 public sealed class SensorsController(IReadQueries queries) : ControllerBase
 {
-    /// <summary>Situação agora: última leitura do sensor e o evento aberto, se houver.</summary>
+    [HttpGet]
+    [ProducesResponseType<IReadOnlyList<SensorMapDto>>(StatusCodes.Status200OK)]
+    public async Task<IActionResult> List(CancellationToken ct) =>
+        Ok(await queries.GetSensorsAsync(ct));
+
     [HttpGet("{sensorId}/status")]
     [ProducesResponseType<SensorStatusDto>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetStatus(string sensorId, CancellationToken ct) =>

@@ -62,67 +62,283 @@ namespace ProvaDagua.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("11111111-1111-1111-1111-000000000001"),
+                            Id = new Guid("00000000-0000-0000-0001-000000000001"),
                             City = "São Paulo",
-                            Neighborhood = "Jardim das Águas",
-                            Number = "10",
+                            Neighborhood = "São Miguel Paulista",
+                            Number = "120",
                             SensorId = "sensor-01",
-                            Street = "Rua das Flores"
+                            Street = "Rua Amazonas"
                         },
                         new
                         {
-                            Id = new Guid("11111111-1111-1111-1111-000000000002"),
+                            Id = new Guid("00000000-0000-0000-0001-000000000002"),
                             City = "São Paulo",
-                            Neighborhood = "Jardim das Águas",
-                            Number = "25",
+                            Neighborhood = "São Miguel Paulista",
+                            Number = "245",
                             SensorId = "sensor-01",
-                            Street = "Rua das Flores"
+                            Street = "Rua Amazonas"
                         },
                         new
                         {
-                            Id = new Guid("11111111-1111-1111-1111-000000000003"),
+                            Id = new Guid("00000000-0000-0000-0001-000000000003"),
                             City = "São Paulo",
-                            Neighborhood = "Jardim das Águas",
-                            Number = "40",
+                            Neighborhood = "São Miguel Paulista",
+                            Number = "380",
                             SensorId = "sensor-01",
-                            Street = "Rua das Flores"
+                            Street = "Rua Amazonas"
                         },
                         new
                         {
-                            Id = new Guid("11111111-1111-1111-1111-000000000004"),
+                            Id = new Guid("00000000-0000-0000-0002-000000000001"),
                             City = "São Paulo",
-                            Neighborhood = "Jardim das Águas",
-                            Number = "57",
-                            SensorId = "sensor-01",
-                            Street = "Rua das Flores"
-                        },
-                        new
-                        {
-                            Id = new Guid("22222222-2222-2222-2222-000000000001"),
-                            City = "São Paulo",
-                            Neighborhood = "Jardim das Águas",
-                            Number = "5",
+                            Neighborhood = "Vila Prudente",
+                            Number = "1200",
                             SensorId = "sensor-02",
-                            Street = "Rua dos Ipês"
+                            Street = "Avenida Luiz Ignácio de Anhaia Mello"
                         },
                         new
                         {
-                            Id = new Guid("22222222-2222-2222-2222-000000000002"),
+                            Id = new Guid("00000000-0000-0000-0002-000000000002"),
                             City = "São Paulo",
-                            Neighborhood = "Jardim das Águas",
-                            Number = "18",
+                            Neighborhood = "Vila Prudente",
+                            Number = "1450",
                             SensorId = "sensor-02",
-                            Street = "Rua dos Ipês"
+                            Street = "Avenida Luiz Ignácio de Anhaia Mello"
                         },
                         new
                         {
-                            Id = new Guid("22222222-2222-2222-2222-000000000003"),
+                            Id = new Guid("00000000-0000-0000-0002-000000000003"),
                             City = "São Paulo",
-                            Neighborhood = "Jardim das Águas",
-                            Number = "33",
+                            Neighborhood = "Vila Prudente",
+                            Number = "1700",
                             SensorId = "sensor-02",
-                            Street = "Rua dos Ipês"
+                            Street = "Avenida Luiz Ignácio de Anhaia Mello"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0003-000000000001"),
+                            City = "São Paulo",
+                            Neighborhood = "Aricanduva",
+                            Number = "2100",
+                            SensorId = "sensor-03",
+                            Street = "Avenida Aricanduva"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0003-000000000002"),
+                            City = "São Paulo",
+                            Neighborhood = "Aricanduva",
+                            Number = "2350",
+                            SensorId = "sensor-03",
+                            Street = "Avenida Aricanduva"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0003-000000000003"),
+                            City = "São Paulo",
+                            Neighborhood = "Aricanduva",
+                            Number = "2600",
+                            SensorId = "sensor-03",
+                            Street = "Avenida Aricanduva"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0004-000000000001"),
+                            City = "São Paulo",
+                            Neighborhood = "Itaquera",
+                            Number = "800",
+                            SensorId = "sensor-04",
+                            Street = "Avenida Jacu-Pêssego"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0004-000000000002"),
+                            City = "São Paulo",
+                            Neighborhood = "Itaquera",
+                            Number = "1050",
+                            SensorId = "sensor-04",
+                            Street = "Avenida Jacu-Pêssego"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0004-000000000003"),
+                            City = "São Paulo",
+                            Neighborhood = "Itaquera",
+                            Number = "1300",
+                            SensorId = "sensor-04",
+                            Street = "Avenida Jacu-Pêssego"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0005-000000000001"),
+                            City = "São Paulo",
+                            Neighborhood = "Cambuci",
+                            Number = "4500",
+                            SensorId = "sensor-05",
+                            Street = "Avenida do Estado"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0005-000000000002"),
+                            City = "São Paulo",
+                            Neighborhood = "Cambuci",
+                            Number = "4800",
+                            SensorId = "sensor-05",
+                            Street = "Avenida do Estado"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0005-000000000003"),
+                            City = "São Paulo",
+                            Neighborhood = "Cambuci",
+                            Number = "5100",
+                            SensorId = "sensor-05",
+                            Street = "Avenida do Estado"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0006-000000000001"),
+                            City = "São Paulo",
+                            Neighborhood = "Pompeia",
+                            Number = "300",
+                            SensorId = "sensor-06",
+                            Street = "Avenida Pompeia"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0006-000000000002"),
+                            City = "São Paulo",
+                            Neighborhood = "Pompeia",
+                            Number = "520",
+                            SensorId = "sensor-06",
+                            Street = "Avenida Pompeia"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0006-000000000003"),
+                            City = "São Paulo",
+                            Neighborhood = "Pompeia",
+                            Number = "780",
+                            SensorId = "sensor-06",
+                            Street = "Avenida Pompeia"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0007-000000000001"),
+                            City = "São Paulo",
+                            Neighborhood = "Ipiranga",
+                            Number = "1000",
+                            SensorId = "sensor-07",
+                            Street = "Avenida Doutor Ricardo Jafet"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0007-000000000002"),
+                            City = "São Paulo",
+                            Neighborhood = "Ipiranga",
+                            Number = "1300",
+                            SensorId = "sensor-07",
+                            Street = "Avenida Doutor Ricardo Jafet"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0007-000000000003"),
+                            City = "São Paulo",
+                            Neighborhood = "Ipiranga",
+                            Number = "1600",
+                            SensorId = "sensor-07",
+                            Street = "Avenida Doutor Ricardo Jafet"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0008-000000000001"),
+                            City = "São Paulo",
+                            Neighborhood = "Freguesia do Ó",
+                            Number = "200",
+                            SensorId = "sensor-08",
+                            Street = "Avenida Antônio Munhoz Bonilha"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0008-000000000002"),
+                            City = "São Paulo",
+                            Neighborhood = "Freguesia do Ó",
+                            Number = "450",
+                            SensorId = "sensor-08",
+                            Street = "Avenida Antônio Munhoz Bonilha"
+                        },
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0008-000000000003"),
+                            City = "São Paulo",
+                            Neighborhood = "Freguesia do Ó",
+                            Number = "700",
+                            SensorId = "sensor-08",
+                            Street = "Avenida Antônio Munhoz Bonilha"
                         });
+                });
+
+            modelBuilder.Entity("ProvaDagua.Domain.Alerts.AlertNotification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AddressId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("FloodEventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("character varying(400)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("character varying(11)");
+
+                    b.Property<DateTimeOffset>("SentAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("SubscriptionId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("SubscriptionId", "FloodEventId")
+                        .IsUnique();
+
+                    b.ToTable("alert_notifications", (string)null);
+                });
+
+            modelBuilder.Entity("ProvaDagua.Domain.Alerts.AlertSubscription", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AddressId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("character varying(11)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId", "Phone")
+                        .IsUnique();
+
+                    b.ToTable("alert_subscriptions", (string)null);
                 });
 
             modelBuilder.Entity("ProvaDagua.Domain.Certificates.FloodCertificate", b =>
@@ -241,6 +457,112 @@ namespace ProvaDagua.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("readings", (string)null);
+                });
+
+            modelBuilder.Entity("ProvaDagua.Domain.Sensors.Sensor", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("Neighborhood")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Zone")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("sensors", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "sensor-01",
+                            Latitude = -23.492999999999999,
+                            Longitude = -46.441000000000003,
+                            Name = "Rua Amazonas",
+                            Neighborhood = "São Miguel Paulista",
+                            Zone = "Leste"
+                        },
+                        new
+                        {
+                            Id = "sensor-02",
+                            Latitude = -23.584299999999999,
+                            Longitude = -46.581000000000003,
+                            Name = "Av. Luiz Ignácio de Anhaia Mello",
+                            Neighborhood = "Vila Prudente",
+                            Zone = "Leste"
+                        },
+                        new
+                        {
+                            Id = "sensor-03",
+                            Latitude = -23.564,
+                            Longitude = -46.518000000000001,
+                            Name = "Av. Aricanduva",
+                            Neighborhood = "Aricanduva",
+                            Zone = "Leste"
+                        },
+                        new
+                        {
+                            Id = "sensor-04",
+                            Latitude = -23.545000000000002,
+                            Longitude = -46.454000000000001,
+                            Name = "Av. Jacu-Pêssego",
+                            Neighborhood = "Itaquera",
+                            Zone = "Leste"
+                        },
+                        new
+                        {
+                            Id = "sensor-05",
+                            Latitude = -23.556000000000001,
+                            Longitude = -46.619999999999997,
+                            Name = "Av. do Estado",
+                            Neighborhood = "Cambuci",
+                            Zone = "Centro"
+                        },
+                        new
+                        {
+                            Id = "sensor-06",
+                            Latitude = -23.530999999999999,
+                            Longitude = -46.686,
+                            Name = "Av. Pompeia",
+                            Neighborhood = "Pompeia",
+                            Zone = "Oeste"
+                        },
+                        new
+                        {
+                            Id = "sensor-07",
+                            Latitude = -23.59,
+                            Longitude = -46.609499999999997,
+                            Name = "Av. Ricardo Jafet",
+                            Neighborhood = "Ipiranga",
+                            Zone = "Sul"
+                        },
+                        new
+                        {
+                            Id = "sensor-08",
+                            Latitude = -23.497,
+                            Longitude = -46.695999999999998,
+                            Name = "Av. Antônio Munhoz Bonilha",
+                            Neighborhood = "Freguesia do Ó",
+                            Zone = "Norte"
+                        });
                 });
 #pragma warning restore 612, 618
         }

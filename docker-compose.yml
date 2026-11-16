@@ -30,10 +30,11 @@ services:
   api:
     build: ./api
     environment:
-      ASPNETCORE_ENVIRONMENT: Development   
+      ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__Database: "Host=db;Port=5432;Database=provadagua;Username=provadagua;Password=provadagua"
       Ai__BaseUrl: http://ai:8000
       Database__MigrateOnStartup: "true"
+      Worker__IntervalSeconds: "2"
     ports:
       - "5016:8080"
     depends_on:
@@ -44,11 +45,20 @@ services:
 
   simulator:
     build: ./iot
-    profiles: ["simulator"]
     environment:
       API_URL: http://api:8080
+    ports:
+      - "8100:8100"
     depends_on:
       - api
+
+  web:
+    build: ./web
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+      - simulator
 
 volumes:
   pgdata:

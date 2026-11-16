@@ -1,0 +1,47 @@
+{
+  "train_windows": 3000,
+  "test_windows": 1000,
+  "baseline_rule": "nível >= 15.0 cm por 3+ leituras seguidas é alagamento",
+  "baseline": {
+    "accuracy": 0.733,
+    "precision_flood": 0.6527,
+    "recall_flood": 0.996,
+    "f1_flood": 0.7886,
+    "confusion_matrix [flood, noise]": [
+      [
+        498,
+        2
+      ],
+      [
+        265,
+        235
+      ]
+    ]
+  },
+  "model": {
+    "accuracy": 0.998,
+    "precision_flood": 0.998,
+    "recall_flood": 0.998,
+    "f1_flood": 0.998,
+    "confusion_matrix [flood, noise]": [
+      [
+        499,
+        1
+      ],
+      [
+        1,
+        499
+      ]
+    ]
+  },
+  "feature_importance": {
+    "mean_level_cm": 0.2436,
+    "fraction_above_threshold": 0.2401,
+    "mean_rainfall_mm_per_hour": 0.2321,
+    "longest_run_above_threshold": 0.084,
+    "max_jump_cm": 0.0803,
+    "max_level_cm": 0.0504,
+    "level_std_cm": 0.0479,
+    "level_slope_cm_per_step": 0.0216
+  }
+}

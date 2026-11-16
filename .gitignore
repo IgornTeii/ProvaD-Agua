@@ -1,0 +1,41 @@
+# ===== .NET (api/) =====
+**/bin/
+**/obj/
+*.user
+*.suo
+*.rsuser
+.vs/
+TestResults/
+
+# ===== Python (iot/, ai/) =====
+**/.venv/
+**/venv/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Artefatos gerados: são recriados a partir do código (o build da imagem da IA treina o modelo)
+ai/model.joblib
+data/raw/*.csv
+
+# ===== Node / React (web/) =====
+**/node_modules/
+**/dist/
+**/.vite/
+npm-debug.log*
+
+# ===== Power BI =====
+# O .pbix PRECISA ir para o repositório (é entregável); só os arquivos temporários ficam de fora
+dashboard/**/~$*
+dashboard/**/*.pbix.bak
+
+# ===== Ambiente e segredos =====
+.env
+.env.*
+!.env.example
+
+# ===== Editores e sistema =====
+.idea/
+*.swp
+.DS_Store
+Thumbs.db

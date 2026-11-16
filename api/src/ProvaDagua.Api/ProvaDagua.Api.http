@@ -1,0 +1,21 @@
+@ProvaDagua.Api_HostAddress = http://localhost:5016
+
+POST {{baseUrl}}/readings
+X-Sensor-Key: dev-key-sensor-01
+Content-Type: application/json
+
+{ "waterLevelCm": 22.5, "rainfallMmPerHour": 35, "measuredAt": "2026-11-15T20:40:00-03:00" }
+
+### Sem chave (deve dar 401)
+POST {{baseUrl}}/readings
+Content-Type: application/json
+
+{ "waterLevelCm": 10, "rainfallMmPerHour": 5, "measuredAt": "2026-11-15T20:41:00-03:00" }
+
+### Nível negativo (deve dar 400)
+POST {{baseUrl}}/readings
+X-Sensor-Key: dev-key-sensor-01
+Content-Type: application/json
+
+{ "waterLevelCm": -3, "rainfallMmPerHour": 5, "measuredAt": "2026-11-15T20:42:00-03:00" }
+###

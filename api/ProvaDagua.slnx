@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ProvaDagua.Api/ProvaDagua.Api.csproj" />
+    <Project Path="src/ProvaDagua.Application/ProvaDagua.Application.csproj" />
+    <Project Path="src/ProvaDagua.Domain/ProvaDagua.Domain.csproj" />
+    <Project Path="src/ProvaDagua.Infrastructure/ProvaDagua.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ProvaDagua.UnitTests/ProvaDagua.UnitTests.csproj" />
+  </Folder>
+</Solution>

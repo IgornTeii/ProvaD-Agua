@@ -1,0 +1,9 @@
+.git/
+**/.venv/
+**/__pycache__/
+**/bin/
+**/obj/
+**/node_modules/
+data/
+ai/model.joblib
+ai/metrics.json

@@ -1,0 +1,54 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: provadagua
+      POSTGRES_PASSWORD: provadagua
+      POSTGRES_DB: provadagua
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U provadagua -d provadagua"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  ai:
+    build:
+      context: .
+      dockerfile: ai/Dockerfile
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build: ./api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development   
+      ConnectionStrings__Database: "Host=db;Port=5432;Database=provadagua;Username=provadagua;Password=provadagua"
+      Ai__BaseUrl: http://ai:8000
+      Database__MigrateOnStartup: "true"
+    ports:
+      - "5016:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+      ai:
+        condition: service_healthy
+
+  simulator:
+    build: ./iot
+    profiles: ["simulator"]
+    environment:
+      API_URL: http://api:8080
+    depends_on:
+      - api
+
+volumes:
+  pgdata:

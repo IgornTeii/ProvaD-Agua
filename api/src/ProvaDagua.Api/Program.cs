@@ -15,6 +15,7 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddScoped<RegisterReadingHandler>();
 builder.Services.Configure<SensorAuthOptions>(builder.Configuration.GetSection("SensorAuth"));
 builder.Services.AddScoped<EvaluateSuspectedEventsHandler>();
+builder.Services.AddScoped<CloseRecededEventsHandler>();  
 builder.Services.AddHostedService<FloodEventEvaluationWorker>();
 
 var app = builder.Build();

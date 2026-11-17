@@ -35,7 +35,7 @@ pre { background: #0f1e30; color: #e6f0fb; padding: 2.5mm; border-radius: 2mm; f
 .kpi span { font-size: 8.5pt; color: var(--muted); }
 figure { margin: 0 0 4mm; page-break-inside: avoid; }
 figure img { width: 100%; border: 1px solid var(--line); border-radius: 2mm; display: block; }
-figure img.crop { height: 70mm; object-fit: cover; object-position: top; }
+figure img.crop { height: 70mm; object-fit: cover; object-position: left top; }
 figure img.tall { height: 112mm; object-fit: cover; object-position: top; }
 figcaption { font-size: 8.5pt; color: var(--muted); margin-top: 1.2mm; }
 .cover { height: 265mm; display: flex; flex-direction: column; justify-content: space-between; }
@@ -316,11 +316,9 @@ figcaption { font-size: 8.5pt; color: var(--muted); margin-top: 1.2mm; }
   <p><b>Por que dois sensores:</b> o nível sozinho não distingue um alagamento de um carro jogando água. A chuva é o contexto que a IA usa para decidir. O simulador tem 6 cenários (alagamento, enxurrada, alagamento sem chuva local, splash, obstrução e chuva fraca) e roda em <b>8 pontos reais de São Paulo</b> que costumam alagar, com 3 endereços cobertos cada.</p>
 
   <h3>Protótipo: telas</h3>
-  <div class="grid2">
-    <figure><img class="crop" src="prints/01-inicio.png"><figcaption>1 · Início: o que é o serviço, a situação agora e os caminhos</figcaption></figure>
-    <figure><img class="crop" src="prints/02-mapa.png"><figcaption>2 · Mapa agora: verde normal, amarelo suspeita, vermelho confirmado</figcaption></figure>
-  </div>
-  <div class="todo" style="margin-top:0"><b>PREENCHER:</b> trocar o print 2 por um tirado na sua máquina. Aqui o fundo do mapa (OpenStreetMap) não carregou porque o acesso é bloqueado no ambiente onde os prints foram gerados.</div>
+  <figure><img src="prints/02-mapa.png"><figcaption>1 · Mapa agora: os 8 pontos reais de São Paulo; verde normal, amarelo suspeita, vermelho alagamento confirmado</figcaption></figure>
+  <figure><img class="crop" src="prints/01-inicio.png" style="height:62mm"><figcaption>2 · Início: o que é o serviço, a situação agora e os caminhos</figcaption></figure>
+
   <div class="grid2">
     <figure><img class="tall" src="prints/03-minha-rua-alagando.png"><figcaption>3 · Minha rua durante um alagamento: situação, ouvir em voz alta, o que fazer, ligar para o 199 e cadastrar o celular</figcaption></figure>
     <div>

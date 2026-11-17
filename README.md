@@ -6,6 +6,8 @@ Projeto da **Global Solution 2026/2 — CitizenTech** (FIAP, Engenharia de Softw
 
 🎥 **Vídeo pitch:** _TODO: link público (YouTube, Drive ou Vimeo), testado em aba anônima_
 
+[![ci](https://github.com/IgornTeii/ProvaD-Agua/actions/workflows/ci.yml/badge.svg)](https://github.com/IgornTeii/ProvaD-Agua/actions/workflows/ci.yml)
+
 ---
 
 ## Sumário
@@ -22,7 +24,7 @@ Projeto da **Global Solution 2026/2 — CitizenTech** (FIAP, Engenharia de Softw
 10. [Área 3 — MVP, IoT e experiência digital](#10-área-3--mvp-iot-e-experiência-digital)
 11. [Área 4 — DevOps, segurança e qualidade](#11-área-4--devops-segurança-e-qualidade)
 12. [Impacto e como medimos](#12-impacto-e-como-medimos)
-13. [Validação com pessoas reais](#13-validação-com-pessoas-reais)
+13. [Limitações conhecidas](#13-limitações-conhecidas)
 14. [Uso de IA generativa](#14-uso-de-ia-generativa)
 15. [Integrantes](#15-integrantes)
 
@@ -34,33 +36,34 @@ Soluções de enchente costumam resolver o **antes**: previsão e alerta. Quase 
 
 Quem perde móveis, eletrodomésticos, carro ou dias de trabalho num alagamento precisa **provar que foi atingido** para pedir auxílio, seguro ou saque emergencial. Hoje essa prova depende de foto, protocolo, vistoria e semanas de espera, e quem mais sofre é justamente quem tem menos condição de esperar.
 
-_TODO: inserir um dado real sobre alagamentos (fonte pública: Defesa Civil, IBGE, S2iD)._
+**Um exemplo real:** no temporal de 10 de fevereiro de 2020, o Centro de Gerenciamento de Emergências Climáticas (CGE) da Prefeitura registrou 132 pontos de alagamento em São Paulo, 66 deles intransitáveis ([ISTOÉ, 10/02/2020](https://istoe.com.br/sp-chuva-forte-provoca-alagamento-e-interdita-marginais/)). A Av. Antônio Munhoz Bonilha, um dos 8 pontos monitorados neste protótipo, estava na lista de alagamentos do CGE naquele dia.
 
 ## 2. O cidadão beneficiado
 
 Moradores de ruas e bairros que alagam com frequência, principalmente famílias de baixa renda, para quem um alagamento significa perda de bens e de renda.
 
-**Persona:** Dona Maria mora numa rua que alaga toda vez que chove forte. Depois de cada enchente, precisa juntar fotos e enfrentar filas para comprovar o prejuízo. Com o Prova d'Água, ela consulta o endereço e recebe uma comprovação com código verificável, sem fila e sem precisar provar sozinha o que a rua inteira viveu.
+**Persona:** Dona Maria mora numa rua que alaga toda vez que chove forte. Depois de cada enchente, precisa juntar fotos e enfrentar filas para comprovar o prejuízo. Com o Prova d'Água, ela digita o nome da rua, vê a comprovação do seu endereço e mostra o código para o órgão de auxílio, sem fila e sem precisar provar sozinha o que a rua inteira viveu.
 
 ## 3. A solução
 
 Sensores instalados na rua medem **nível de água** e **chuva** continuamente. Quando uma **IA confirma** que a subida da água é um alagamento real, e não ruído do sensor, o sistema:
 
 1. registra o evento de alagamento com início, fim e nível máximo atingido;
-2. **emite automaticamente uma comprovação por endereço** da área afetada, com um código de verificação;
-3. indica se o endereço é **elegível a auxílio** (pico acima de um limite definido pela Defesa Civil);
-4. alimenta um **dashboard** para a Defesa Civil acompanhar ruas atingidas, impacto e tempo de resposta.
+2. **avisa por SMS (simulado)** os moradores que cadastraram o celular;
+3. **emite automaticamente uma comprovação por endereço** da área afetada, com um código de verificação;
+4. indica se o endereço é **elegível a auxílio** (pico a partir de 30 cm);
+5. mostra tudo num **mapa de São Paulo** e num **histórico** pesquisável por data e por rua.
 
 ### A história de um alagamento
 
 | Momento | O que acontece no sistema |
 |---|---|
 | Começa a chover | Cada leitura dos sensores é gravada (imutável: é a prova) |
-| Nível passa de 15 cm | Abre um **evento Suspeito** para o sensor |
-| IA analisa a sequência de leituras | **Alagamento** → evento Confirmado · **Ruído** → evento Descartado · **Inconclusivo** → aguarda o próximo ciclo |
+| Nível passa de 15 cm | Abre um **evento Suspeito** e o ponto fica **amarelo** no mapa |
+| IA analisa a sequência de leituras | **Alagamento** → Confirmado (ponto **vermelho**, SMS enviado) · **Ruído** → Descartado · **Inconclusivo** → aguarda o próximo ciclo |
 | Água sobe e desce | O evento guarda o **pico** atingido |
-| Água baixa | O evento é **Encerrado** |
-| Logo em seguida | Uma **comprovação por endereço** é emitida, com código verificável |
+| Água fica abaixo de 15 cm por 18 leituras seguidas | O evento é **Encerrado** |
+| No mesmo instante | Uma **comprovação por endereço** é emitida, com código `PDA-XXXX-XXXX` |
 | Dias depois | Cidadão ou órgão público consulta e verifica a comprovação pelo código |
 
 ### Ciclo de vida do evento
@@ -77,9 +80,9 @@ Só anda para frente, um passo de cada vez. Qualquer outra transição é recusa
 
 | Participante | Papel |
 |---|---|
-| **Cidadão** | Consulta a situação do bairro e a comprovação do seu endereço |
-| **Defesa Civil** | Define os limites (suspeita e elegibilidade), acompanha o dashboard |
-| **Prefeitura / órgãos de auxílio e seguradoras** | Verificam a autenticidade das comprovações pelo código |
+| **Cidadão** | Consulta a situação da rua, recebe o aviso e pega a comprovação do seu endereço |
+| **Defesa Civil** | Define os limites (suspeita e elegibilidade) e acompanha o mapa e o histórico |
+| **Prefeitura, órgãos de auxílio e seguradoras** | Verificam a autenticidade das comprovações pelo código |
 | **Sensores (IoT)** | Medem nível de água e chuva na rua |
 
 ## 5. ODS atendidos
@@ -90,46 +93,50 @@ Só anda para frente, um passo de cada vez. Qualquer outra transição é recusa
 
 ## 6. Arquitetura
 
-_TODO: inserir o diagrama de arquitetura (também vai no PDF)._
+O diagrama completo está no PDF de entrega.
 
 ```
  ┌──────────────┐  POST /readings   ┌───────────────────────────┐   POST /classify   ┌──────────────┐
  │  Simulador   │ ────────────────► │        API (.NET 10)      │ ─────────────────► │  IA (Python) │
  │  IoT (mock)  │   X-Sensor-Key    │  Clean Architecture + DDD │ ◄───────────────── │ scikit-learn │
- └──────────────┘                   └─────────────┬─────────────┘   flood/noise/...  └──────────────┘
-                                                  │
-                                           ┌──────▼──────┐
-                                           │ PostgreSQL  │──────► Dashboard (Power BI)
-                                           └──────▲──────┘
-                                                  │
-                                    ┌─────────────┴─────────────┐
-                                    │   Web (React + TS)        │
-                                    │   4 telas do cidadão      │
-                                    └───────────────────────────┘
+ └──────▲───────┘                   └─────────────┬─────────────┘  flood/noise/...   └──────────────┘
+        │ inicia cenários                         │
+        │                                  ┌──────▼──────┐
+        │                                  │ PostgreSQL  │──────► Dashboard (Power BI)
+        │                                  └──────▲──────┘
+        │                                         │ consultas
+ ┌──────┴─────────────────────────────────────────┴──────┐
+ │              Site (React + TypeScript)                 │
+ │  mapa · minha rua · histórico · comprovações · simular │
+ └────────────────────────────────────────────────────────┘
 ```
 
-**Princípio:** serviços separados num único repositório. Nenhum serviço importa código de outro; eles só se comunicam por HTTP. Cada um tem seu próprio README e Dockerfile.
+**Princípio:** serviços separados num único repositório. Nenhum serviço importa código de outro; eles só se comunicam por HTTP. Cada um tem seu próprio Dockerfile.
 
-**A IA opina, a API decide:** a IA só classifica uma sequência de leituras. Quem aplica a regra de negócio (confirmar, descartar, emitir comprovação) é a API. Assim a regra fica num lugar só, e o modelo pode ser trocado sem alterar o domínio.
+**A IA opina, a API decide:** a IA só classifica uma sequência de leituras. Quem aplica a regra de negócio (confirmar, descartar, encerrar, emitir comprovação) é a API. Assim a regra fica num lugar só, e o modelo pode ser trocado sem alterar o domínio.
 
 ### Estrutura do repositório
 
 ```
 prova-dagua/
-├── api/                  # C# ASP.NET Core (.NET 10)
+├── api/                    # C# ASP.NET Core (.NET 10)
 │   ├── src/
 │   │   ├── ProvaDagua.Domain           # Regras de negócio puras
 │   │   ├── ProvaDagua.Application      # Casos de uso e contratos
-│   │   ├── ProvaDagua.Infrastructure   # EF Core, PostgreSQL, implementações
-│   │   └── ProvaDagua.Api              # Controllers, autenticação, composição
+│   │   ├── ProvaDagua.Infrastructure   # EF Core, PostgreSQL, cliente da IA
+│   │   └── ProvaDagua.Api              # Controllers, autenticação do sensor, worker
 │   └── tests/ProvaDagua.UnitTests
-├── simulator/            # Python: sensores simulados e cenários
-├── ai/                   # Python: treino, avaliação e serviço de classificação
-├── data/                 # Pipeline e camadas de dados
-├── web/                  # React + TypeScript
-├── dashboard/            # Power BI (.pbix) e prints
-├── docs/                 # Arquitetura, plano de testes, prompts, evidências
-├── .github/workflows/    # CI
+├── iot/                    # Python: sensores simulados, cenários e servidor do simulador
+│   └── tests/
+├── ai/                     # Python: dataset, treino, métricas e serviço de classificação
+│   └── tests/
+├── web/                    # React + TypeScript (Vite)
+│   └── tests/              # unit/ (Vitest) e e2e/ (Playwright)
+├── data/raw/               # Dados brutos gerados para o treino da IA
+├── tests/smoke/            # Teste do sistema inteiro rodando no Docker
+├── dashboard/              # Power BI (.pbix) e prints
+├── docs/                   # Diagramas, evidências e PDF
+├── .github/workflows/      # CI (GitHub Actions)
 └── docker-compose.yml
 ```
 
@@ -137,96 +144,130 @@ prova-dagua/
 
 | Parte | Tecnologia | Motivo |
 |---|---|---|
-| API | C# / ASP.NET Core (.NET 10 LTS) | Versão com suporte longo; Clean Architecture com Result pattern |
+| API | C# / ASP.NET Core (.NET 10 LTS) + EF Core | Versão com suporte longo; Clean Architecture com Result pattern |
 | Banco | PostgreSQL 17 (Docker) | Índices únicos e parciais garantem as regras de idempotência |
-| IA | Python + scikit-learn | Classificação explicável e mensurável, sem custo de API |
-| IoT | Simulador em Python (mock) | Permitido pelo regulamento; reproduz uma enchente sob demanda |
-| Front-end | React + TypeScript | — |
+| IA | Python + scikit-learn (Random Forest) + Flask | Classificação explicável e mensurável, sem custo de API |
+| IoT | Simulador em Python (mock), só biblioteca padrão | Permitido pelo regulamento; reproduz uma enchente sob demanda |
+| Site | React 19 + TypeScript + Vite, Leaflet (OpenStreetMap) | Mapa real de São Paulo, sem chave de API |
 | Dashboard | Power BI Desktop + DAX | — |
-| CI/CD | GitHub Actions | Gratuito em repositório público |
+| CI | GitHub Actions | Gratuito em repositório público |
 
 ## 7. Como executar
 
-### Pré-requisitos
+### Pré-requisito
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- [.NET SDK 10](https://dotnet.microsoft.com/download/dotnet/10.0)
-- Python 3.10+
-- _TODO: Node.js (para o front-end)_
 
-### Passo a passo
+### Subir tudo
 
 ```bash
-# 1. Subir o banco (na raiz do repositório)
-docker compose up -d
-
-# 2. Criar as tabelas (na pasta api)
-cd api
-dotnet tool restore
-dotnet ef database update -p src/ProvaDagua.Infrastructure -s src/ProvaDagua.Api
-
-# 3. Rodar a API
-dotnet run --project src/ProvaDagua.Api
-# Swagger: http://localhost:5016/swagger
-
-# 4. Em outro terminal, simular um alagamento
-cd simulator
-python3 main.py flood
+docker compose up --build -d
 ```
 
-_TODO: quando o docker-compose subir todos os serviços, substituir os passos acima por um único `docker compose up`._
+Na primeira vez demora alguns minutos: as imagens são construídas, a IA é treinada dentro do build e as tabelas do banco são criadas automaticamente quando a API sobe.
 
-### Cenários do simulador
-
-| Comando | O que simula |
+| Serviço | Endereço |
 |---|---|
-| `python3 main.py normal` | Dia comum, sem chuva |
-| `python3 main.py light_rain` | Chuva fraca, nível sobe sem alagar |
-| `python3 main.py flood` | Alagamento real: sobe, fica no pico e baixa |
-| `python3 main.py splash --sensor-key dev-key-sensor-02` | Ruído: carro joga água no sensor |
+| **Site** | http://localhost:3000 |
+| API (Swagger) | http://localhost:5016/swagger |
+| IA | http://localhost:8000/health |
+| Simulador | http://localhost:8100/scenarios |
+| PostgreSQL | `localhost:5432` (usuário, senha e banco: `provadagua`) |
 
-Opções: `--api-url`, `--sensor-key`, `--interval` (segundos reais entre envios).
+### Simular um alagamento
+
+1. Abra http://localhost:3000/simular.
+2. Em **Ponto escolhido**, selecione a rua; depois escolha o cenário (por exemplo, **Alagamento de verdade**).
+3. Clique em **Simular** e acompanhe as etapas, o gráfico e o mapa.
+4. Quando terminar, abra **Comprovações** e escolha a rua para ver as comprovações emitidas.
+
+| Cenário | O que simula | Resultado esperado |
+|---|---|---|
+| Alagamento de verdade | Chuva forte, a água sobe, fica alta e baixa | Confirmado, encerrado e comprovações emitidas |
+| Enxurrada rápida | Subida brusca | Confirmado mesmo com a subida rápida |
+| Alagamento sem chuva no bairro | Água vem de outro bairro | A IA reconhece pelo comportamento da água |
+| Carro jogando água no sensor | Espirro de poucos segundos | Suspeita aberta e descartada pela IA |
+| Lixo parado embaixo do sensor | Obstrução de alguns minutos | Suspeita aberta e descartada pela IA |
+| Chuva fraca | Água sobe poucos centímetros | Nada acontece |
+
+O simulador também tem uma linha de comando: `docker compose run --rm simulator python main.py flood`.
+
+### Começar do zero
+
+```bash
+docker compose down -v
+docker compose up --build -d
+```
+
+### Rodar os testes
+
+| Parte | Comando | Pré-requisito |
+|---|---|---|
+| API | `cd api && dotnet test` | .NET SDK 10 |
+| IA | `cd ai && pip install -r requirements-dev.txt && python -m pytest` | Python 3.13 |
+| Simulador | `cd iot && pip install -r requirements-dev.txt && python -m pytest` | Python 3.13 |
+| Site | `cd web && npm ci && npm test` | Node.js 22 |
+| Site no navegador | `cd web && npx playwright install chromium && npm run test:e2e` | Node.js 22 |
+| Sistema inteiro | `docker compose up --build -d && python tests/smoke/smoke.py --site http://localhost:3000` | Docker e Python |
 
 ## 8. Área 1 — IA e automação
 
-_Status: ⏳ em desenvolvimento_
-
 **Problema que a IA resolve:** um sensor de nível não distingue um alagamento real de um carro jogando água nele. Uma regra fixa ("acima de X cm = alagou") gera falsos alarmes e, portanto, comprovações e auxílios indevidos.
 
-**Como funciona:** a IA recebe uma **janela de leituras** (não uma leitura isolada) e classifica em **alagamento**, **ruído** ou **inconclusivo**, a partir de características (features) da sequência:
+**Como funciona:** a IA recebe uma **janela de leituras** (nunca uma leitura isolada) e calcula 8 características da sequência: nível máximo, médio e oscilação, tendência de subida, maior salto entre leituras, fração e maior sequência acima de 15 cm, e chuva média. Um **Random Forest** classifica em **alagamento** ou **ruído**. Com menos de 6 leituras, ou confiança abaixo de 80%, a resposta é **inconclusiva**.
 
-- **Tendência:** o nível sobe de forma contínua ou dá um salto e volta?
-- **Duração:** ficou alto por minutos ou por segundos?
-- **Chuva junto:** a subida acompanha a chuva?
-- **Oscilação:** variação suave ou picos isolados?
+**Automação:** um worker em segundo plano na API roda em ciclos (30 s em produção, 2 s na demonstração). A cada ciclo ele envia à IA as leituras de cada evento Suspeito e aplica o resultado. Também encerra os eventos cuja água baixou e emite as comprovações. Se a IA estiver fora do ar, o evento continua Suspeito: o sistema nunca confirma nem descarta "por garantia".
 
-**Automação:** um processo em segundo plano na API consulta a IA a cada ciclo para cada evento Suspeito e aplica o resultado. Se a IA estiver fora do ar, o evento continua Suspeito (nunca confirma nem descarta "por garantia").
+**Métrica (antes × depois)** em 1.000 janelas de teste separadas do treino (dados simulados):
 
-**Métrica (antes × depois):** _TODO: acurácia, precisão e recall do modelo comparados com a regra fixa de limite, num conjunto de teste separado do treino._
+| | Regra fixa (≥ 15 cm por 3 leituras) | Modelo |
+|---|---|---|
+| Acurácia | 75,6% | **99,9%** |
+| Precisão (alagamento) | 67,4% | **100%** |
+| Recall (alagamento) | 99,0% | **99,8%** |
+| Falsos alarmes em 500 ruídos | 239 | **0** |
+| Alagamentos perdidos em 500 | 5 | **1** |
 
-**Demonstração (entrada → saída):** _TODO: exemplo de janela de leituras e resposta da IA._
+> As métricas foram medidas em dados gerados pelo simulador, não em dados reais de campo. O próximo passo é recalibrar com leituras de sensores instalados.
 
-**Prompts / regras de automação:** _TODO: documentar no PDF._
+O CI retreina o modelo a cada commit e **falha se ele ficar abaixo de 95%** de acurácia, precisão ou recall, ou se deixar de ganhar da regra fixa.
+
+**Demonstração (entrada → saída):**
+
+```bash
+curl -X POST http://localhost:8000/classify -H "Content-Type: application/json" \
+  -d '{"readings":[{"waterLevelCm":16,"rainfallMmPerHour":42},{"waterLevelCm":19,"rainfallMmPerHour":45},
+       {"waterLevelCm":23,"rainfallMmPerHour":47},{"waterLevelCm":27,"rainfallMmPerHour":50},
+       {"waterLevelCm":31,"rainfallMmPerHour":52},{"waterLevelCm":34,"rainfallMmPerHour":51}]}'
+```
+
+```json
+{ "label": "flood", "confidence": 1.0 }
+```
+
+Com um carro jogando água no sensor (um único pico de 38 cm sem chuva), a resposta é `{ "label": "noise", "confidence": 0.995 }`. Com menos de 6 leituras, é `inconclusive`.
+
+Para retreinar: `cd iot && python generate_dataset.py` e depois `cd ai && python train.py`. O resultado fica em `ai/metrics.json`. O treino usa semente fixa: com as mesmas versões das bibliotecas, os números se repetem a cada execução.
 
 ## 9. Área 2 — Big Data e visualização
 
-_Status: ⏳ em desenvolvimento_
+_Status: ⏳ dashboard em desenvolvimento_
 
 **Estrutura dos dados (camadas):**
 
-| Camada | Conteúdo |
-|---|---|
-| **Bruto** | Leitura como chegou do sensor. Nunca é apagada: é a prova |
-| **Tratado** | Sem duplicatas e sem valores impossíveis, com datas em UTC |
-| **Analítico** | Agregados prontos para o dashboard (ex.: nível máximo por rua por hora) |
+| Camada | Conteúdo | Onde está |
+|---|---|---|
+| **Bruto** | Leitura como chegou do sensor. Nunca é apagada: é a prova | Tabela `readings` e `data/raw/training_readings.csv` |
+| **Tratado** | Sem duplicatas e sem valores impossíveis, com datas em UTC | Validação no domínio e índices únicos do banco |
+| **Analítico** | Eventos, comprovações e agregados para o dashboard | Tabelas `flood_events` e `flood_certificates` |
 
-**Ingestão e processamento:** sensor → `POST /readings` → validação → gravação → classificação → evento → comprovação.
+**Ingestão e processamento:** sensor → `POST /readings` (chave do sensor) → validação → gravação → evento Suspeito → classificação pela IA → evento Confirmado ou Descartado → encerramento → comprovações.
 
 **Dashboard (Defesa Civil):** _TODO_
-- Eventos por bairro e período
+- Alagamentos por bairro e período
 - Endereços atingidos e elegíveis a auxílio
-- Tempo entre o fim do alagamento e a emissão da comprovação
-- Acerto da IA
+- Falsos alarmes evitados pela IA
+- Tempo entre o início do evento e a confirmação
 
 **Funções analíticas (DAX):** _TODO_
 
@@ -236,99 +277,134 @@ _Status: ⏳ em desenvolvimento_
 
 | Sensor | Equivalente real | Mede | Frequência |
 |---|---|---|---|
-| **Nível de água** | Ultrassônico HC-SR04, instalado a uma altura fixa acima da rua | Altura da água (cm) | A cada 10 s |
+| **Nível de água** | Ultrassônico HC-SR04, instalado a 2 m acima da rua | Distância até a superfície, convertida em altura da água (cm) | A cada 10 s |
 | **Pluviômetro** | Pluviômetro de báscula | Intensidade da chuva (mm/h) | A cada 10 s |
+
+O simulador reproduz defeitos reais: ruído de medição, perda de eco do ultrassônico e obstruções (lixo, carro) que o sensor "enxerga" como água.
 
 **Por que dois sensores:** o nível sozinho não distingue um alagamento de um carro jogando água no sensor. **A chuva é o contexto** que a IA usa para decidir.
 
-### Protótipo — 4 telas
+### 8 pontos reais de São Paulo
 
-_Status: ⏳ em desenvolvimento_
+Os sensores ficam em ruas que costumam alagar (Rua Amazonas em São Miguel Paulista, Av. Luiz Ignácio de Anhaia Mello, Av. Aricanduva, Av. Jacu-Pêssego, Av. do Estado, Av. Pompeia, Av. Doutor Ricardo Jafet e Av. Antônio Munhoz Bonilha), com 3 endereços cobertos cada. As coordenadas são aproximadas. Os locais são reais; os alagamentos são simulados.
 
-1. Situação agora no meu bairro
-2. Consultar meu endereço
-3. Minha comprovação (com código verificável)
-4. Mapa e histórico dos eventos
+### Protótipo — telas
+
+| Tela | O que o cidadão faz |
+|---|---|
+| **Início** | Entende o que é o serviço, vê se algum ponto está alagando agora e escolhe o que quer fazer |
+| **Mapa agora** | Vê os 8 pontos de São Paulo: verde normal, amarelo suspeita, vermelho alagamento confirmado |
+| **Minha rua** | Busca o endereço, vê a situação com gráfico da água, recebe orientações e cadastra o celular para o aviso |
+| **Histórico** | Pesquisa alagamentos por data, rua ou bairro e abre os detalhes de cada um |
+| **Comprovações** | Escolhe a rua e vê, imprime ou compartilha as comprovações |
+| **Verificar código** | Órgão público confere se uma comprovação é autêntica |
+| **Simulador** | Dispara um dos 6 cenários e acompanha cada etapa ao vivo |
+
+Acessibilidade: fonte Atkinson Hyperlegible (feita para baixa visão), botões para aumentar o texto e alto contraste, leitura em voz alta, atalho para pular ao conteúdo, navegação por teclado e layout para celular. Os telefones de emergência (199, 193 e 192) ficam no rodapé de todas as páginas.
 
 ### Endpoints da API
 
-| Método | Rota | Descrição | Status |
-|---|---|---|---|
-| `POST` | `/readings` | Ingestão de leituras (exige `X-Sensor-Key`) | ✅ |
-| `GET` | `/flood-events` | Alagamentos confirmados | ⏳ |
-| `GET` | `/certificates?address=` | Comprovação do endereço | ⏳ |
-| `GET` | `/certificates/{code}/verify` | Verifica a autenticidade de uma comprovação | ⏳ |
-
-Respostas do `POST /readings`: **202** (aceita; o processamento segue em segundo plano), **400** (dado inválido), **401** (chave ausente ou inválida).
+| Método | Rota | Descrição |
+|---|---|---|
+| `POST` | `/readings` | Ingestão de leituras (exige `X-Sensor-Key`): 202, 400 ou 401 |
+| `GET` | `/sensors` | Os 8 pontos com a situação atual |
+| `GET` | `/sensors/{id}/status` | Última leitura e evento aberto de um sensor |
+| `GET` | `/addresses?search=` | Busca de endereços cobertos |
+| `GET` | `/addresses/{id}/notifications` | Avisos enviados ao endereço (telefone mascarado) |
+| `POST` | `/alerts/subscriptions` | Cadastro do celular para o aviso |
+| `GET` | `/flood-events` | Histórico com filtros por sensor, status, período e rua |
+| `GET` | `/flood-events/{id}` | Detalhe de um alagamento |
+| `GET` | `/certificates?addressId=` ou `?floodEventId=` | Comprovações de um endereço ou de um alagamento |
+| `GET` | `/certificates/{code}/verify` | Verifica a autenticidade (404 se não existe) |
 
 ### Fluxo funcional completo
 
-_TODO: descrever o uso de ponta a ponta (do sensor até o cidadão verificando a comprovação)._
+1. No **Simulador**, o usuário dispara "Alagamento de verdade" na Rua Amazonas.
+2. As leituras chegam em `POST /readings`. Ao passar de 15 cm, abre um evento Suspeito e o ponto fica amarelo no mapa.
+3. O worker envia a janela à IA, que responde "alagamento". O evento é confirmado, o ponto fica vermelho e quem cadastrou o celular recebe o aviso.
+4. A água baixa. Depois de 18 leituras abaixo de 15 cm, o evento é encerrado e cada um dos 3 endereços recebe uma comprovação.
+5. Em **Comprovações**, o morador escolhe a rua e vê a comprovação com o código.
+6. Em **Verificar código**, um órgão público digita o código e confirma que ela é autêntica.
+
+Esse fluxo é testado automaticamente no CI (`tests/smoke/smoke.py`), junto com o caso de ruído: um splash precisa ser descartado pela IA.
 
 ## 11. Área 4 — DevOps, segurança e qualidade
 
 ### Organização
-Monorepo com serviços independentes, versionado no Git. API em Clean Architecture com 4 projetos; a direção das dependências é garantida pelo compilador.
+
+Monorepo com serviços independentes, versionado no Git. A API usa Clean Architecture com 4 projetos, e a direção das dependências é garantida pelo compilador.
 
 ### DevOps
-_TODO: workflow do GitHub Actions (build + testes a cada commit), Dockerfiles e docker-compose com todos os serviços._
+
+- **Docker:** cada serviço tem seu Dockerfile, e o `docker-compose.yml` sobe os 5 (banco, IA, API, simulador e site) com healthchecks e dependências.
+- **CI (GitHub Actions):** cada push roda 6 jobs:
+
+| Job | O que valida |
+|---|---|
+| API .NET | build e testes xUnit |
+| IA Python | testes e quality gate do modelo, com a tabela de métricas no resumo da execução |
+| Simulador IoT | testes dos sensores, cenários e servidor |
+| Site (unitários) | tipos, lint e testes com Vitest |
+| Site (navegador) | testes com Playwright no desktop e no celular |
+| Sistema completo | sobe tudo com Docker Compose e roda um alagamento e um splash de ponta a ponta |
 
 ### Segurança
 
 | Prática | Como foi aplicada |
 |---|---|
-| **Autenticação do sensor** | Cada sensor envia uma chave no cabeçalho `X-Sensor-Key`. **A identidade do sensor vem da chave, nunca do corpo da requisição**: uma chave vazada só compromete o próprio sensor, e não permite forjar alagamentos em outras ruas |
-| **Validação de entrada** | O domínio recusa leituras fisicamente impossíveis (nível fora de 0–500 cm, chuva negativa, data no futuro) |
-| **Integridade e idempotência** | Índices únicos no banco impedem leituras duplicadas, mais de um evento aberto por sensor e mais de uma comprovação por endereço por evento |
-| **Comprovação não adivinhável** | Código no formato `PDA-XXXX-XXXX` gerado com gerador criptográfico, sem caracteres ambíguos |
+| **Autenticação do sensor** | Cada sensor envia uma chave no cabeçalho `X-Sensor-Key`. **A identidade do sensor vem da chave, nunca do corpo da requisição**: uma chave vazada só compromete o próprio sensor e não permite forjar alagamentos em outras ruas |
+| **Validação de entrada** | O domínio recusa leituras impossíveis (nível fora de 0–500 cm, chuva negativa, data no futuro), o cadastro exige celular com 10 ou 11 dígitos e a IA e o simulador validam o formato do que recebem |
+| **Integridade e idempotência** | Índices únicos impedem leituras duplicadas, mais de um evento aberto por sensor, mais de uma comprovação por endereço por evento e mais de um aviso por cadastro por evento |
+| **Comprovação não adivinhável** | Código `PDA-XXXX-XXXX` gerado com gerador criptográfico, sem caracteres ambíguos (sem 0, O, 1, I ou L) |
+| **Privacidade** | O telefone nunca volta inteiro pela API, só mascarado, por exemplo `(11) •••••-4321`. As fontes do site são servidas pelo próprio site, sem enviar o IP do cidadão a terceiros |
+| **CORS restrito** | A API só aceita chamadas do navegador vindas do próprio site |
 
-_Observação: as chaves de sensor deste repositório são de desenvolvimento. Em produção, viriam de variáveis de ambiente e seriam armazenadas como hash._
+_Observação: as chaves de sensor deste repositório são de desenvolvimento. Em produção, viriam de variáveis de ambiente ou de um cofre de segredos e seriam armazenadas como hash._
 
 ### Testes
-_TODO: plano com 5+ casos e evidências. Já implementados (testes unitários do domínio):_
 
-| # | Caso | Resultado esperado |
+São 81 testes automatizados, mais o teste do sistema inteiro:
+
+| Parte | Ferramenta | Testes |
 |---|---|---|
-| 1 | Encerrar evento ainda Suspeito | Falha `only_confirmed_can_be_closed`; estado não muda |
-| 2 | Confirmar evento Suspeito | Status vira Confirmado |
-| 3 | Confirmar duas vezes | Segunda tentativa falha |
-| 4 | Registrar nível maior e menor que o pico | Pico só aumenta |
-| 5 | Criar leitura com nível negativo | Falha `invalid_water_level` |
-| 6 | Descartar evento já confirmado | Falha `only_suspected_can_be_dismissed` |
+| Domínio da API | xUnit | 8 |
+| IA | pytest | 19 |
+| Simulador IoT | pytest | 25 |
+| Site | Vitest + Testing Library | 21 |
+| Site no navegador | Playwright (desktop e celular) | 4 cenários × 2 telas |
+| Sistema completo | `tests/smoke/smoke.py` | 1 fluxo de ponta a ponta |
 
-Testes de integração manuais (`api/readings.http`): leitura válida (202), sem chave (401), nível negativo (400), leitura repetida (202 sem duplicar no banco).
-
-Executar: `cd api && dotnet test`
+O plano de testes com casos, resultados esperados e evidências está no PDF.
 
 ## 12. Impacto e como medimos
 
 | Indicador | Hoje | Com o Prova d'Água |
 |---|---|---|
-| Tempo até a comprovação | Semanas (foto, protocolo, vistoria) | Minutos após o fim do alagamento |
+| Tempo até a comprovação | Semanas (foto, protocolo, vistoria) | Logo depois que a água baixa |
 | Quem prova o alagamento | O próprio cidadão | O sensor, de forma automática |
-| Falsos alarmes | Regra fixa de nível | _TODO: redução medida com a IA_ |
+| Falsos alarmes (dados simulados) | 239 em 500 com a regra fixa | 0 em 500 com a IA |
+| Aviso ao morador | Nenhum | SMS quando o alagamento é confirmado |
 
-**Como ampliar:** os limites de suspeita e de elegibilidade são parâmetros, definidos pela Defesa Civil de cada município. O mesmo sistema escala para qualquer cidade, bastando instalar sensores e cadastrar os endereços cobertos.
+**Como ampliar:** os limites de suspeita e de elegibilidade são parâmetros definidos pela Defesa Civil de cada município. O mesmo sistema escala para qualquer cidade, bastando instalar sensores e cadastrar os endereços cobertos.
 
-## 13. Validação com pessoas reais
+## 13. Limitações conhecidas
 
-_TODO: registrar as conversas com moradores de áreas que alagam:_
-1. Onde alaga e o que acontece?
-2. Como você fica sabendo hoje, e como comprova o prejuízo?
-3. O que mudaria a sua vida depois de um alagamento?
-4. **O que mudou no projeto depois dessas conversas.**
+- As métricas da IA foram medidas em dados simulados.
+- Se a IA ficar fora do ar durante todo o alagamento, o evento fica Suspeito e não gera comprovação.
+- A IA analisa as leituras mais recentes do sensor, e não uma janela presa ao início do evento.
+- As comprovações são públicas por código, sem login. O próximo passo é a integração com o gov.br.
+- O SMS é simulado: a mensagem é gravada e mostrada no site, mas não é enviada a uma operadora.
 
 ## 14. Uso de IA generativa
 
-Conforme o regulamento, declaramos as ferramentas de IA generativa utilizadas e para quê. Todo o conteúdo gerado foi lido, compreendido, revisado e adaptado pelo autor.
+Conforme o regulamento, declaro as ferramentas de IA generativa usadas e para quê. Todo o conteúdo gerado foi lido, entendido e revisado por mim antes de entrar no projeto.
 
 | Ferramenta | Uso |
 |---|---|
-| Claude (Anthropic) | Apoio à ideação e ao recorte do problema, discussão de arquitetura e modelagem de domínio (DDD), explicação de erros, revisão de código, rascunho do simulador e desta documentação |
-| _TODO_ | _Completar com qualquer outra ferramenta usada (ex.: GitHub Copilot)_ |
+| Claude (Anthropic) | Apoio na ideação, em dúvidas de arquitetura e de erros, e na geração e revisão de código e documentação |
 
 ## 15. Integrantes
 
 | Nome | RM |
 |---|---|
-| _TODO_ | _TODO_ |
+| Igor Nunes Teixeira | _TODO_ |

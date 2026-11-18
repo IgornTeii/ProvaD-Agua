@@ -1,0 +1,33 @@
+{
+  "name": "Prova d'Água",
+  "dataColors": ["#1565c0", "#5cc8ff", "#0a2540", "#d99a00", "#b0191f", "#1b6e3a", "#0f4c81", "#8a5300"],
+  "background": "#ffffff",
+  "foreground": "#142334",
+  "tableAccent": "#1565c0",
+  "good": "#1b6e3a",
+  "neutral": "#d99a00",
+  "bad": "#b0191f",
+  "minimum": "#e6f0fb",
+  "center": "#1e7bd6",
+  "maximum": "#0a2540",
+  "textClasses": {
+    "callout": { "fontSize": 44, "fontFace": "Segoe UI Semibold", "color": "#0a2540" },
+    "title": { "fontSize": 20, "fontFace": "Segoe UI Semibold", "color": "#142334" },
+    "header": { "fontSize": 18, "fontFace": "Segoe UI Semibold", "color": "#142334" },
+    "label": { "fontSize": 15, "fontFace": "Segoe UI", "color": "#4a5a6c" }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [{ "show": true, "color": { "solid": { "color": "#ffffff" } }, "transparency": 0 }],
+        "border": [{ "show": true, "color": { "solid": { "color": "#d6dfe9" } }, "radius": 20 }],
+        "title": [{ "show": true, "fontColor": { "solid": { "color": "#142334" } }, "fontFamily": "Segoe UI Semibold", "fontSize": 20 }]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [{ "color": { "solid": { "color": "#f6f8fb" } }, "transparency": 0 }]
+      }
+    }
+  }
+}

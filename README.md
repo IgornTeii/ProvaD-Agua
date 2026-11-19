@@ -200,7 +200,36 @@ Retreinar: `cd iot && python generate_dataset.py`, depois `cd ai && python train
 
 **Ingestão:** sensor → `POST /readings` com a chave → validação → gravação → suspeita → IA → confirmação ou descarte → encerramento → comprovações.
 
-**Dashboard da Defesa Civil:** _TODO: descrever os indicadores, os filtros e as medidas DAX e apontar para os prints em `dashboard/`._
+### Dashboard da Defesa Civil (Power BI)
+
+Arquivo: [`dashboard/prova-dagua.pbix`](dashboard/prova-dagua.pbix). Responde à pergunta da Defesa Civil: **"o que aconteceu na cidade?"**.
+
+**Data lake do dashboard** (`dashboard/data`), gerado por [`dashboard/pipeline.py`](dashboard/pipeline.py) (Python, pandas):
+
+| Camada | Conteúdo |
+|---|---|
+| `raw` | As 7 tabelas do PostgreSQL exportadas em CSV, sem alteração |
+| `trusted` | Dados limpos: tipos corretos, datas em horário de Brasília (UTC-3), sem duplicatas, sem leituras impossíveis |
+| `refined` | Modelo em estrela: `fato_eventos`, `fato_comprovacoes`, `dim_sensor`, `dim_endereco`, `dim_calendario` |
+
+Para regenerar a trusted e a refined a partir da raw: `cd dashboard && python pipeline.py`.
+
+**Indicadores:** alagamentos confirmados, falsos alarmes evitados pela IA e taxa de descarte, endereços atingidos e elegíveis a auxílio, tempo médio até a confirmação, duração média, pico máximo por rua e eventos por dia.
+**Filtros** (sincronizados nas 4 páginas): período, zona, bairro, rua e status do evento.
+
+| Medida DAX | O que responde |
+|---|---|
+| `Alagamentos Confirmados` | Quantos alagamentos reais a IA confirmou |
+| `Falsos Alarmes Evitados` | Quantos eventos a IA descartou como ruído |
+| `Taxa de Descarte %` | Parcela dos eventos decididos que foi falso alarme |
+| `Endereços Atingidos` / `Endereços Elegíveis` | Endereços com comprovação e os que têm direito a auxílio (pico de 30 cm ou mais) |
+| `Tempo Médio até Confirmação (s)` / `Duração Média (s)` | Rapidez da IA e duração dos alagamentos, em segundos |
+| `Pico Máximo (cm)` | Maior nível de água nos alagamentos confirmados |
+| `Confirmados Período Anterior` / `Variação vs Período Anterior %` | Comparação com o período anterior de mesma duração |
+
+As fórmulas de todas as medidas estão no [PDF de entrega](docs/Prova-dAgua-Entregaveis.pdf). Prints das 4 páginas em [`dashboard/prints`](dashboard/prints).
+
+Os dados do dashboard vêm do simulador do projeto e foram distribuídos entre 04 e 17/11/2026, com alguns picos ajustados, para dar variedade de datas e de elegibilidade.
 
 ## Protótipo
 

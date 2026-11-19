@@ -69,7 +69,7 @@ figcaption { font-size: 8.5pt; color: var(--muted); margin-top: 1.2mm; }
       <tr><th style="width:42mm">Item</th><th>Informação</th></tr>
       <tr><td>Curso e turma</td><td>Engenharia de Software · 4ESOA</td></tr>
       <tr><td>Integrantes</td><td>Igor Nunes Teixeira · RM 551099<br>Lorenzo Guimaraes · RM 99621<br>Cayo Malara · RM 551243<br>Thiago Bullara · RM 99461</td></tr>
-      <tr><td>Grupo</td><td><b style="color:#8a5300">[PREENCHER nome do grupo]</b></td></tr>
+      <tr><td>Grupo</td><td>Legionários</td></tr>
       <tr><td>Repositório</td><td>github.com/IgornTeii/ProvaD-Agua</td></tr>
       <tr><td>Vídeo pitch</td><td style="word-break:break-all;font-size:9pt"><a href="https://drive.google.com/file/d/1VVWptccEn55uDLJWgtA4pa0_qOjUAzMr/view?usp=sharing">https://drive.google.com/file/d/1VVWptccEn55uDLJWgtA4pa0_qOjUAzMr/view?usp=sharing</a></td></tr>
       <tr><td>ODS</td><td>11 · Cidades sustentáveis &nbsp;|&nbsp; 13 · Ação climática &nbsp;|&nbsp; 10 · Redução das desigualdades</td></tr>
@@ -291,17 +291,67 @@ figcaption { font-size: 8.5pt; color: var(--muted); margin-top: 1.2mm; }
     <div><b>Dado tratado</b>Evento encerrado e comprovações</div>
   </div>
   <h3>Dashboard da Defesa Civil</h3>
-  <div class="todo">
-    <b>PREENCHER:</b> prints do dashboard com 3 ou mais indicadores e filtros. Sugestões:
-    <ul style="margin:1.5mm 0 0">
-      <li>Alagamentos por bairro e por período (filtros de data e de zona)</li>
-      <li>Endereços atingidos e elegíveis a auxílio</li>
-      <li>Falsos alarmes evitados pela IA (eventos descartados)</li>
-      <li>Tempo entre o início da suspeita e a confirmação</li>
-    </ul>
+  <p>O dashboard foi feito em <b>Power BI Desktop</b> para responder à pergunta da Defesa Civil: <b>"o que aconteceu na cidade?"</b>. Ele lê os dados já tratados do data lake do projeto e reúne 4 páginas, com os indicadores e os filtros abaixo.</p>
+  <div class="kpis">
+    <div class="kpi"><b>16</b><span>alagamentos confirmados</span></div>
+    <div class="kpi"><b>14</b><span>falsos alarmes evitados pela IA (46,7% de descarte)</span></div>
+    <div class="kpi"><b>24</b><span>endereços atingidos</span></div>
+    <div class="kpi"><b>18</b><span>endereços elegíveis a auxílio (75%)</span></div>
   </div>
+  <h3>Data lake do dashboard: raw, trusted e refined</h3>
+  <table>
+    <tr><th style="width:22mm">Camada</th><th>Conteúdo</th><th style="width:62mm">Onde está</th></tr>
+    <tr><td><b>raw</b></td><td>Tabelas exportadas do PostgreSQL em CSV, sem nenhuma alteração</td><td><code>dashboard/data/raw</code> (7 tabelas)</td></tr>
+    <tr><td><b>trusted</b></td><td>Dados limpos: tipos corretos, datas em horário de Brasília, sem duplicatas, sem leituras impossíveis</td><td><code>dashboard/data/trusted</code> (7 tabelas)</td></tr>
+    <tr><td><b>refined</b></td><td>Modelo final em estrela, consumido pelo Power BI: fatos de eventos e de comprovações; dimensões de sensor, endereço e calendário</td><td><code>dashboard/data/refined</code> (5 tabelas)</td></tr>
+  </table>
+  <div class="flow">
+    <div><b>PostgreSQL</b>Sistema real: eventos, leituras e comprovações</div>
+    <div><b>raw</b>CSV exportado, sem alteração</div>
+    <div><b>trusted</b>Pipeline em Python: limpeza e datas em UTC-3</div>
+    <div><b>refined</b>Modelo em estrela com colunas derivadas</div>
+    <div><b>Power BI</b>Carrega, relaciona e agrega com DAX</div>
+  </div>
+  <p>Um pipeline em Python (<code>dashboard/pipeline.py</code>, com pandas) lê a camada raw e gera a trusted e a refined. Ele converte as datas de UTC para o horário de Brasília, corrige os tipos, remove duplicatas (por identificador e por código de comprovação) e descarta leituras impossíveis (nível ou chuva fora de faixas plausíveis); um relatório de qualidade registra as linhas antes e depois de cada tabela. Na refined, calcula também colunas derivadas (flags de confirmado e descartado, tempo até a confirmação, duração, endereços atingidos e elegíveis). Transformar antes do BI deixa o dashboard mais leve e mantém o DAX só para agregar. Relações no Power BI: <code>dim_sensor</code> e <code>dim_calendario</code> filtram <code>fato_eventos</code>, que filtra <code>fato_comprovacoes</code>; <code>dim_endereco</code> também filtra <code>fato_comprovacoes</code>.</p>
+  <p class="small">Dados do dashboard: eventos gerados pelo simulador do projeto e depois distribuídos entre 04 e 17/11/2026, com alguns picos ajustados, para dar variedade de datas e de elegibilidade. A limpeza não removeu linhas porque o simulador já gera dados consistentes.</p>
+  <h3>Indicadores e filtros</h3>
+  <ul>
+    <li><b>Visão geral:</b> alagamentos confirmados, falsos alarmes evitados, taxa de descarte, endereços atingidos e elegíveis, e eventos por dia.</li>
+    <li><b>Onde:</b> mapa dos 8 pontos, confirmados por zona e por bairro, e pico máximo da água por rua, com o limite de 30 cm do auxílio.</li>
+    <li><b>IA e tempos:</b> tempo médio até a confirmação, duração média, resultado da análise da IA e comparação com o período anterior.</li>
+    <li><b>Auxílio:</b> endereços atingidos, elegíveis e não elegíveis, e a tabela de comprovações emitidas com o código PDA.</li>
+  </ul>
+  <p><b>Filtros</b> (sincronizados nas 4 páginas): período (data), zona, bairro, rua e status do evento.</p>
+  <figure><img src="prints/15-dashboard-visao-geral.png"><figcaption>Página 1 · Visão geral: indicadores principais, eventos por dia e filtros</figcaption></figure>
+  <figure><img src="prints/16-dashboard-onde.png"><figcaption>Página 2 · Onde: mapa dos 8 pontos, confirmados por zona e bairro, e pico máximo por rua</figcaption></figure>
+  <figure><img src="prints/17-dashboard-ia-e-tempos.png"><figcaption>Página 3 · IA e tempos: tempo até a confirmação, duração e comparação com o período anterior (filtro de 15 a 17/11)</figcaption></figure>
+  <figure><img src="prints/18-dashboard-auxilio.png"><figcaption>Página 4 · Auxílio: endereços atingidos e elegíveis, e comprovações emitidas</figcaption></figure>
   <h3>Funções analíticas</h3>
-  <div class="todo"><b>PREENCHER:</b> as medidas criadas (por exemplo, em DAX), com a fórmula e o que cada uma responde.</div>
+  <p>Medidas DAX criadas no dashboard (tabela <code>_Medidas</code>). Os tempos estão em segundos, porque o simulador comprime o tempo real dos alagamentos.</p>
+  <table>
+    <tr><th style="width:42mm">Medida</th><th>Fórmula (DAX)</th><th style="width:58mm">O que responde</th></tr>
+    <tr><td><b>Alagamentos Confirmados</b></td><td><code style="white-space:pre-wrap">SUM(fato_eventos[FoiConfirmado])</code></td><td>Quantos alagamentos reais a IA confirmou (eventos confirmados ou já encerrados).</td></tr>
+    <tr><td><b>Falsos Alarmes Evitados</b></td><td><code style="white-space:pre-wrap">SUM(fato_eventos[FoiDescartado])</code></td><td>Quantos eventos suspeitos a IA descartou como ruído (carro jogando água, lixo no sensor).</td></tr>
+    <tr><td><b>Taxa de Descarte %</b></td><td><code style="white-space:pre-wrap">DIVIDE([Falsos Alarmes Evitados],
+  [Falsos Alarmes Evitados] + [Alagamentos Confirmados])</code></td><td>Que parcela dos eventos decididos pela IA foi falso alarme.</td></tr>
+    <tr><td><b>Endereços Atingidos</b></td><td><code style="white-space:pre-wrap">DISTINCTCOUNT(fato_comprovacoes[EnderecoId])</code></td><td>Quantos endereços diferentes receberam comprovação.</td></tr>
+    <tr><td><b>Endereços Elegíveis</b></td><td><code style="white-space:pre-wrap">CALCULATE(DISTINCTCOUNT(fato_comprovacoes[EnderecoId]),
+  fato_comprovacoes[ElegivelAuxilio] = 1)</code></td><td>Quantos endereços têm direito a auxílio (pico de 30 cm ou mais).</td></tr>
+    <tr><td><b>Endereços Não Elegíveis</b></td><td><code style="white-space:pre-wrap">[Endereços Atingidos] - [Endereços Elegíveis]</code></td><td>Endereços atingidos cujo pico não chegou a 30 cm.</td></tr>
+    <tr><td><b>% de Endereços Elegíveis</b></td><td><code style="white-space:pre-wrap">DIVIDE([Endereços Elegíveis], [Endereços Atingidos])</code></td><td>Proporção dos endereços atingidos que têm direito a auxílio.</td></tr>
+    <tr><td><b>Tempo Médio até Confirmação (s)</b></td><td><code style="white-space:pre-wrap">AVERAGE(fato_eventos[SegundosAteConfirmacao])</code></td><td>Quanto tempo, em média, a IA leva entre a suspeita e a confirmação (em segundos, pois o simulador comprime o tempo).</td></tr>
+    <tr><td><b>Duração Média (s)</b></td><td><code style="white-space:pre-wrap">AVERAGE(fato_eventos[DuracaoSegundos])</code></td><td>Quanto dura, em média, um alagamento, do início ao encerramento.</td></tr>
+    <tr><td><b>Pico Máximo (cm)</b></td><td><code style="white-space:pre-wrap">CALCULATE(MAX(fato_eventos[PicoCm]),
+  fato_eventos[FoiConfirmado] = 1)</code></td><td>Maior nível de água atingido nos alagamentos confirmados, por rua, bairro ou zona.</td></tr>
+    <tr><td><b>Total de Eventos</b></td><td><code style="white-space:pre-wrap">COUNTROWS(fato_eventos)</code></td><td>Quantidade de eventos (suspeitas) registrados.</td></tr>
+    <tr><td><b>Confirmados Período Anterior</b></td><td><code style="white-space:pre-wrap">VAR dias = DATEDIFF(MIN(dim_calendario[Data]),
+  MAX(dim_calendario[Data]), DAY) + 1
+RETURN CALCULATE([Alagamentos Confirmados],
+  DATEADD(dim_calendario[Data], -dias, DAY))</code></td><td>Confirmados no período imediatamente anterior, com a mesma duração do período selecionado.</td></tr>
+    <tr><td><b>Variação vs Período Anterior %</b></td><td><code style="white-space:pre-wrap">DIVIDE([Alagamentos Confirmados] - [Confirmados Período Anterior],
+  [Confirmados Período Anterior])</code></td><td>Quanto os alagamentos confirmados cresceram ou diminuíram em relação ao período anterior.</td></tr>
+  </table>
+  <p class="small">A comparação com o período anterior só retorna valor quando existe período anterior com dados (por exemplo, 11 a 17/11 contra 04 a 10/11).</p>
 </div>
 
 <div class="section">

@@ -1,4 +1,4 @@
-Grupo: [PREENCHER nome do grupo]
+Grupo: Legionários
 
 Integrantes:
 Igor Nunes Teixeira - RM 551099

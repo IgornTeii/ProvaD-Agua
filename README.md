@@ -8,7 +8,7 @@ Sensores medem a água e a chuva em ruas de São Paulo que costumam alagar. Uma 
 
 Global Solution 2026/2 · **CitizenTech** · FIAP Engenharia de Software · ODS 11, 13 e 10
 
-🎥 **Vídeo pitch:** _TODO: link público (YouTube não listado), testado em aba anônima_
+🎥 **Vídeo pitch:** [https://drive.google.com/file/d/1VVWptccEn55uDLJWgtA4pa0_qOjUAzMr/view?usp=sharing](https://drive.google.com/file/d/1VVWptccEn55uDLJWgtA4pa0_qOjUAzMr/view?usp=sharing)
 📄 **PDF de entrega:** [`docs/Prova-dAgua-Entregaveis.pdf`](docs/Prova-dAgua-Entregaveis.pdf)
 
 <p align="center">
@@ -336,5 +336,7 @@ Declaração conforme o regulamento. Todo o conteúdo gerado foi lido, entendido
 
 | Nome | RM | Responsabilidade |
 |---|---|---|
-| Igor Nunes Teixeira | _TODO_ | API, IA, IoT, site, CI e documentação |
-| _TODO_ | _TODO_ | Dashboard (Big Data e visualização) |
+| Igor Nunes Teixeira | 551099 | API, IA, IoT, site, CI e documentação |
+| Cayo Malara | 551243 | Dashboard (Big Data e visualização) |
+| Lorenzo Guimaraes | 99621 | _TODO_ |
+| Thiago Bullara | 99461 | _TODO_ |

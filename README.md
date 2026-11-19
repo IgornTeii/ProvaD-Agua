@@ -334,9 +334,9 @@ Declaração conforme o regulamento. Todo o conteúdo gerado foi lido, entendido
 
 ## Integrantes
 
-| Nome | RM | Responsabilidade |
-|---|---|---|
-| Igor Nunes Teixeira | 551099 | API, IA, IoT, site, CI e documentação |
-| Cayo Malara | 551243 | Dashboard (Big Data e visualização) |
-| Lorenzo Guimaraes | 99621 | _TODO_ |
-| Thiago Bullara | 99461 | _TODO_ |
+| Nome | RM |
+|---|---|
+| Igor Nunes Teixeira | 551099 |
+| Lorenzo Guimaraes | 99621 |
+| Cayo Malara | 551243 |
+| Thiago Bullara | 99461 |

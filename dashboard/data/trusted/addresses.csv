@@ -1,0 +1,25 @@
+Id,Street,Number,Neighborhood,City,SensorId
+00000000-0000-0000-0001-000000000001,Rua Amazonas,120,São Miguel Paulista,São Paulo,sensor-01
+00000000-0000-0000-0001-000000000002,Rua Amazonas,245,São Miguel Paulista,São Paulo,sensor-01
+00000000-0000-0000-0001-000000000003,Rua Amazonas,380,São Miguel Paulista,São Paulo,sensor-01
+00000000-0000-0000-0002-000000000001,Avenida Luiz Ignácio de Anhaia Mello,1200,Vila Prudente,São Paulo,sensor-02
+00000000-0000-0000-0002-000000000002,Avenida Luiz Ignácio de Anhaia Mello,1450,Vila Prudente,São Paulo,sensor-02
+00000000-0000-0000-0002-000000000003,Avenida Luiz Ignácio de Anhaia Mello,1700,Vila Prudente,São Paulo,sensor-02
+00000000-0000-0000-0003-000000000001,Avenida Aricanduva,2100,Aricanduva,São Paulo,sensor-03
+00000000-0000-0000-0003-000000000002,Avenida Aricanduva,2350,Aricanduva,São Paulo,sensor-03
+00000000-0000-0000-0003-000000000003,Avenida Aricanduva,2600,Aricanduva,São Paulo,sensor-03
+00000000-0000-0000-0004-000000000001,Avenida Jacu-Pêssego,800,Itaquera,São Paulo,sensor-04
+00000000-0000-0000-0004-000000000002,Avenida Jacu-Pêssego,1050,Itaquera,São Paulo,sensor-04
+00000000-0000-0000-0004-000000000003,Avenida Jacu-Pêssego,1300,Itaquera,São Paulo,sensor-04
+00000000-0000-0000-0005-000000000001,Avenida do Estado,4500,Cambuci,São Paulo,sensor-05
+00000000-0000-0000-0005-000000000002,Avenida do Estado,4800,Cambuci,São Paulo,sensor-05
+00000000-0000-0000-0005-000000000003,Avenida do Estado,5100,Cambuci,São Paulo,sensor-05
+00000000-0000-0000-0006-000000000001,Avenida Pompeia,300,Pompeia,São Paulo,sensor-06
+00000000-0000-0000-0006-000000000002,Avenida Pompeia,520,Pompeia,São Paulo,sensor-06
+00000000-0000-0000-0006-000000000003,Avenida Pompeia,780,Pompeia,São Paulo,sensor-06
+00000000-0000-0000-0007-000000000001,Avenida Doutor Ricardo Jafet,1000,Ipiranga,São Paulo,sensor-07
+00000000-0000-0000-0007-000000000002,Avenida Doutor Ricardo Jafet,1300,Ipiranga,São Paulo,sensor-07
+00000000-0000-0000-0007-000000000003,Avenida Doutor Ricardo Jafet,1600,Ipiranga,São Paulo,sensor-07
+00000000-0000-0000-0008-000000000001,Avenida Antônio Munhoz Bonilha,200,Freguesia do Ó,São Paulo,sensor-08
+00000000-0000-0000-0008-000000000002,Avenida Antônio Munhoz Bonilha,450,Freguesia do Ó,São Paulo,sensor-08
+00000000-0000-0000-0008-000000000003,Avenida Antônio Munhoz Bonilha,700,Freguesia do Ó,São Paulo,sensor-08

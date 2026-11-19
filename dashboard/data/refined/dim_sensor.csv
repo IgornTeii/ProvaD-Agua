@@ -1,0 +1,9 @@
+SensorId,Rua,Bairro,Zona,Latitude,Longitude
+sensor-01,Rua Amazonas,São Miguel Paulista,Leste,-23.493,-46.441
+sensor-02,Av. Luiz Ignácio de Anhaia Mello,Vila Prudente,Leste,-23.5843,-46.581
+sensor-03,Av. Aricanduva,Aricanduva,Leste,-23.564,-46.518
+sensor-04,Av. Jacu-Pêssego,Itaquera,Leste,-23.545,-46.454
+sensor-05,Av. do Estado,Cambuci,Centro,-23.556,-46.62
+sensor-06,Av. Pompeia,Pompeia,Oeste,-23.531,-46.686
+sensor-07,Av. Ricardo Jafet,Ipiranga,Sul,-23.59,-46.6095
+sensor-08,Av. Antônio Munhoz Bonilha,Freguesia do Ó,Norte,-23.497,-46.696

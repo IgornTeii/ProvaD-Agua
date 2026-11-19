@@ -1,0 +1,8 @@
+tabela,linhas_raw,linhas_trusted,removidas,motivo
+sensors,8,8,0,duplicatas por Id
+addresses,24,24,0,duplicatas por Id
+readings,2980,2980,0,"duplicatas, nulos e leituras impossíveis (nível/chuva fora da faixa)"
+flood_events,30,30,0,"duplicatas, status inválido, pico negativo"
+flood_certificates,48,48,0,duplicatas por Id e por código
+alert_subscriptions,0,0,0,duplicatas por Id
+alert_notifications,0,0,0,duplicatas por Id

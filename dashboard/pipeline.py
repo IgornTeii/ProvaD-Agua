@@ -127,6 +127,10 @@ def construir_refined(t: dict[str, pd.DataFrame]) -> None:
     f["DataEvento"] = f["InicioEm"].dt.date
     f["FoiConfirmado"] = f["Status"].isin(["Confirmed", "Closed"]).astype(int)
     f["FoiDescartado"] = (f["Status"] == "Dismissed").astype(int)
+    f["StatusPT"] = f["Status"].map({"Suspected": "Em análise", "Confirmed": "Confirmado",
+                                      "Closed": "Encerrado", "Dismissed": "Descartado"})
+    f["ResultadoIA"] = f["Status"].map({"Suspected": "Em análise", "Confirmed": "Alagamento confirmado",
+                                         "Closed": "Alagamento confirmado", "Dismissed": "Falso alarme"})
     f["SegundosAteConfirmacao"] = (f["ConfirmadoEm"] - f["InicioEm"]).dt.total_seconds().round(2)
     f["DuracaoSegundos"] = (f["EncerradoEm"] - f["InicioEm"]).dt.total_seconds().round(2)
     f["MinutosAteConfirmacao"] = (f["SegundosAteConfirmacao"] / 60).round(4)
@@ -140,6 +144,10 @@ def construir_refined(t: dict[str, pd.DataFrame]) -> None:
     fc["ElegivelAuxilio"] = fc["IsEligibleForAid"].astype(int)
     fc = fc.drop(columns="IsEligibleForAid")
     fc["DataEvento"] = fc["InicioEm"].dt.date
+    # desnormaliza endereço e bairro na fato, para tabelas de consumo usarem uma única tabela
+    fc = fc.merge(dim_endereco[["EnderecoId", "Endereco", "Bairro"]].rename(columns={"Bairro": "BairroEndereco"}),
+                  on="EnderecoId", how="left")
+    fc["ElegivelTexto"] = fc["ElegivelAuxilio"].map({1: "Sim", 0: "Não"})
 
     # DimCalendario: um dia por linha, cobrindo o período dos eventos
     ini, fim = pd.Timestamp(f["DataEvento"].min()), pd.Timestamp(f["DataEvento"].max())
